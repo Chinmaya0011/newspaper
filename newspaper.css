@@ -1,0 +1,355 @@
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+.newspaper-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-section {
+    display: flex;
+    align-items: center;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.section-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.section-list li a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.section-list li a:hover {
+    color: #ff9900;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .nav-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .section-list {
+        flex-direction: column;
+    }
+    
+    .section-list li {
+        margin-bottom: 10px;
+    }
+}
+/* Apply a reset to remove default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Style for the featured article section */
+.featured-article {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the featured article title */
+.featured-article h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Style for the content paragraphs */
+.featured-article p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Additional style for emphasis */
+.featured-article strong {
+    font-weight: bold;
+}
+
+/* Style for images within the article */
+.featured-article img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.breaking-news {
+    text-align: center;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.carousel-container {
+    overflow: hidden;
+    max-width: 800px; /* Adjust as needed */
+    margin: 0 auto;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+}
+
+article {
+    flex: 0 0 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    margin-right: 20px;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    border-radius: 3px;
+}
+
+h3 {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+figcaption {
+    font-style: italic;
+    font-size: 14px;
+    color: #888;
+}
+
+/* Center the <h2> element */
+.state-news {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align items at the top */
+}
+
+.state-news h2,.technology h2,.politics h2,.sports h2 {
+    width: 100%; /* To ensure the h2 takes full width */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.state-news .news-item {
+    width: 30%;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.state-news .news-item:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-5px);
+}
+
+.state-news .news-item img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.state-news .news-item h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.state-news .news-item p {
+    margin-top: 10px;
+}
+
+
+.news-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.news-section .news-item {
+    width: 30%;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.news-section .news-item:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-5px);
+}
+
+.news-section .news-item img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.news-section .news-item h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.news-section .news-item p {
+    margin-top: 10px;
+}
+
+.news-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.news-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.news-section .news-item {
+    width: 30%;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.news-section .news-item:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-5px);
+}
+
+.news-section .news-item img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.news-section .news-item h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.news-section .news-item p {
+    margin-top: 10px;
+}
+
+.news-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Style the Image Gallery section */
+.image-gallery {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.image-gallery h2 {
+    margin-bottom: 20px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.image-container img {
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the Sidebar */
+.sidebar {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 40px;
+}
+
+.sidebar h2 {
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.sidebar a:hover {
+    color: #666;
+}
+
+/* Style the Additional Section */
+.additional-section {
+    text-align: center;
+}
+
+.additional-section h2 {
+    margin-bottom: 20px;
+}
+
+.additional-section h3 {
+    margin-top: 20px;
+}
+
+.additional-section p {
+    margin-bottom: 20px;
+}
