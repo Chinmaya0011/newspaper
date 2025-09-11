@@ -1,0 +1,162 @@
+name: Pre-Deploy Wiz ArgoCD GitOps test
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  create-matrix:
+    name: Create Matrix
+    environment: non-prod
+    runs-on: argo-np
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+      pr-status: ${{ steps.matrix.outputs.pr-created-and-merged }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Checkout Composite Actions Repo
+        uses: actions/checkout@v4
+        with:
+          repository: one-thd/wiz-argo-composite
+          ref: main
+          token: '${{ secrets.PAT_TOKEN }}'
+          path: .github/actions/
+
+      - name: Create Matrix and commit clusters.json file
+        id: matrix
+        uses: ./.github/actions/wiz-argocd-setup
+        with:
+          gcp-sa: '${{ secrets.GCP_CREDENTIALS }}'
+          env: "non-prod"
+          clusters-file: "clusters.json"
+          pat-token: '${{ secrets.PAT_TOKEN }}'
+
+      - name: Debug pr-status
+        run: echo "PR Merged Status- ${{ steps.matrix.outputs.pr-created-and-merged }}"
+
+  split-matrix:
+    needs: create-matrix
+    if: ${{ needs.create-matrix.outputs.pr-status == 'true' }}
+    environment: non-prod
+    runs-on: argo-np
+    outputs:
+      split_0: ${{ steps.split.outputs.split_0 }}
+      split_1: ${{ steps.split.outputs.split_1 }}
+      split_2: ${{ steps.split.outputs.split_2 }}
+    steps:
+      - name: Split matrix into splits
+        id: split
+        run: |
+          matrix='${{ needs.create-matrix.outputs.matrix }}'
+          array=$(echo "$matrix" | jq 'if type=="array" then . else .include end')
+          echo "split_0=$(echo $array | jq -c '.[:200]')" >> $GITHUB_OUTPUT
+          echo "split_1=$(echo $array | jq -c '.[200:400]')" >> $GITHUB_OUTPUT
+          echo "split_2=$(echo $array | jq -c '.[400:600]')" >> $GITHUB_OUTPUT
+
+  setup-sm-argocd-split-0:
+    name: Setup GCP Secrets Manager and ArgoCD (Split 0)
+    environment: non-prod
+    runs-on: argo-np
+    needs: [create-matrix, split-matrix]
+    if: ${{ needs.create-matrix.outputs.pr-status == 'true' && needs.split-matrix.outputs.split_0 != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        item: ${{ fromJson(needs.split-matrix.outputs.split_0) }}
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Checkout Composite Actions Repo
+        uses: actions/checkout@v4
+        with:
+          repository: one-thd/wiz-argo-composite
+          ref: main
+          token: '${{ secrets.PAT_TOKEN }}'
+          path: .github/actions/
+
+      - name: Create Secrets
+        id: setup
+        uses: ./.github/actions/wiz-argocd-secret-setup
+        with:
+          gcp-sa: '${{ secrets.GCP_CREDENTIALS }}'
+          sm-project: np-sec-spm
+          argocd-cluster-name: argo-central-np
+          argocd-cluster-location: us-central1
+          argocd-cluster-project: np-sec-spm
+          project: ${{ matrix.item.project }}
+          name: ${{ matrix.item.name }}
+          location: ${{ matrix.item.location }}
+          group: ${{ matrix.item.group }}
+
+  setup-sm-argocd-split-1:
+    name: Setup GCP Secrets Manager and ArgoCD (Split 1)
+    environment: non-prod
+    runs-on: argo-np
+    needs: [create-matrix, split-matrix]
+    if: ${{ needs.create-matrix.outputs.pr-status == 'true' && needs.split-matrix.outputs.split_0 != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        item: ${{ fromJson(needs.split-matrix.outputs.split_1) }}
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Checkout Composite Actions Repo
+        uses: actions/checkout@v4
+        with:
+          repository: one-thd/wiz-argo-composite
+          ref: main
+          token: '${{ secrets.PAT_TOKEN }}'
+          path: .github/actions/
+      - name: Create Secrets
+        id: setup
+        uses: ./.github/actions/wiz-argocd-secret-setup
+        with:
+          gcp-sa: '${{ secrets.GCP_CREDENTIALS }}'
+          sm-project: np-sec-spm
+          argocd-cluster-name: argo-central-np
+          argocd-cluster-location: us-central1
+          argocd-cluster-project: np-sec-spm
+          project: ${{ matrix.item.project }}
+          name: ${{ matrix.item.name }}
+          location: ${{ matrix.item.location }}
+          group: ${{ matrix.item.group }}
+
+  setup-sm-argocd-split-2:
+    name: Setup GCP Secrets Manager and ArgoCD (Split 2)
+    environment: non-prod
+    runs-on: argo-np
+    needs: [create-matrix, split-matrix]
+    if: ${{ needs.create-matrix.outputs.pr-status == 'true' && needs.split-matrix.outputs.split_0 != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        item: ${{ fromJson(needs.split-matrix.outputs.split_2) }}
+    steps:
+      - name: Checkout Composite Actions Repo
+        uses: actions/checkout@v4
+        with:
+          repository: one-thd/wiz-argo-composite
+          ref: main
+          token: '${{ secrets.PAT_TOKEN }}'
+          path: .github/actions/
+      - name: Create Secrets
+        id: setup
+        uses: ./.github/actions/wiz-argocd-secret-setup
+        with:
+          gcp-sa: '${{ secrets.GCP_CREDENTIALS }}'
+          sm-project: np-sec-spm
+          argocd-cluster-name: argo-central-np
+          argocd-cluster-location: us-central1
+          argocd-cluster-project: np-sec-spm
+          project: ${{ matrix.item.project }}
+          name: ${{ matrix.item.name }}
+          location: ${{ matrix.item.location }}
+          group: ${{ matrix.item.group }}
