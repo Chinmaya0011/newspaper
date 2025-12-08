@@ -1,0 +1,15 @@
+ {
+   "user": {
+     "id": 102,
+     "name": "Bob",
+     "roles": ["viewer", "commenter",],
+     "active": true
+   },
+   "settings": {
+     "theme": "light"
+     "notifications": {
+       "email": true,
+       "sms": false
+     }
+   }
+ }
