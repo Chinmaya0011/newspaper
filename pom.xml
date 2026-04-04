@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-pii-secret
+type: Opaque
+data:
+  ssn: MTIzLTQ1LTY3ODk=
+  api_key: c2tfdGVzdF81MUg4YWJjWFlaOTg3NjU0MzIx

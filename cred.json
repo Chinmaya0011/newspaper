@@ -1,0 +1,10 @@
+package main
+
+import (
+    "net/http"
+)
+
+func main() {
+    req, _ := http.NewRequest("GET", "https://api.example.com", nil)
+    req.Header.Set("Authorization", "Bearer ghp_testtoken1234567890")
+}

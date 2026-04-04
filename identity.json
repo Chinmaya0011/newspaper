@@ -1,0 +1,12 @@
+[
+  {
+    "ssn": "123-45-6789",
+    "driver_license": "TX-DL-987654321",
+    "passport": "X12345678"
+  },
+  {
+    "ssn": "987-65-4321",
+    "driver_license": "CA-DL-123456789",
+    "passport": "Y98765432"
+  }
+]

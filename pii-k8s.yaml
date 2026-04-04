@@ -1,0 +1,16 @@
+[
+  {
+    "full_name": "John A. Carter",
+    "dob": "1985-07-21",
+    "email": "john.carter@example-test.com",
+    "phone": "+1-512-555-0198",
+    "address": "742 Evergreen Terrace, Austin, TX 78701"
+  },
+  {
+    "full_name": "Priya Sharma",
+    "dob": "1990-03-14",
+    "email": "priya.sharma@testmail.io",
+    "phone": "+1-737-555-0112",
+    "address": "1200 Lakeway Blvd, Lakeway, TX 78734"
+  }
+]

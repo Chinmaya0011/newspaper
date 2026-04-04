@@ -1,0 +1,16 @@
+[
+  {
+    "card_type": "Visa",
+    "card_number": "4111 1111 1111 1111",
+    "expiry": "12/29",
+    "cvv": "123",
+    "name_on_card": "John Carter"
+  },
+  {
+    "card_type": "MasterCard",
+    "card_number": "5555 5555 5555 4444",
+    "expiry": "08/28",
+    "cvv": "456",
+    "name_on_card": "Priya Sharma"
+  }
+]
